@@ -40,19 +40,11 @@ public class SecurityConfiguration {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(mvc.pattern("/api/auth/**"))
-                .permitAll()
-                .anyRequest()
-                .authenticated();
 
-        return http.build();
-//        return http.csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/api/auth/**").permitAll();
-//                    auth.anyRequest().authenticated();
-//                }).httpBasic(Customizer.withDefaults()) .build();
+        return http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(mvc.pattern("/api/auth/**")).permitAll();
+                    auth.anyRequest().authenticated();
+                }).httpBasic(Customizer.withDefaults()) .build();
     }
 }
