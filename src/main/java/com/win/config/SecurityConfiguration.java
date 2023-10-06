@@ -57,6 +57,8 @@ public class SecurityConfiguration {
 
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll();// new pattern
+                    auth.requestMatchers(mvc.pattern("/swagger-docs/**")).permitAll();// new pattern
                     auth.requestMatchers(mvc.pattern("/api/auth/**")).permitAll();// new pattern
                     auth.requestMatchers(mvc.pattern("/api/admin/**")).hasRole("ADMIN");
                     auth.requestMatchers(mvc.pattern("/api/user/**")).hasAnyRole("ADMIN", "USER");
