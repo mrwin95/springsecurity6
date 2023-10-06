@@ -6,7 +6,6 @@ import com.win.models.Role;
 import com.win.repository.RoleRepository;
 import com.win.repository.UserRepository;
 import com.win.utils.ExecutionTimeLogger;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

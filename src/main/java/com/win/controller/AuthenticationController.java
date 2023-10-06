@@ -5,7 +5,6 @@ import com.win.dto.LoginResponseDto;
 import com.win.dto.RegistrationDto;
 import com.win.models.ApplicationUser;
 import com.win.service.AuthenticationService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
