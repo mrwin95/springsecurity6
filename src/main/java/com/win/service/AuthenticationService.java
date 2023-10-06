@@ -4,6 +4,7 @@ import com.win.models.ApplicationUser;
 import com.win.models.Role;
 import com.win.repository.RoleRepository;
 import com.win.repository.UserRepository;
+import com.win.utils.ExecutionTimeLogger;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    @ExecutionTimeLogger
     public ApplicationUser registerUser(String username, String password){
         Role userRole = roleRepository.findByAuthority("USER").get();
         Set<Role> authorities = new HashSet<>();
