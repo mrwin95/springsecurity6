@@ -5,7 +5,9 @@ import com.win.dto.LoginResponseDto;
 import com.win.dto.RegistrationDto;
 import com.win.models.ApplicationUser;
 import com.win.service.AuthenticationService;
+import com.win.utils.ExecutionTimeLogger;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +22,13 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
+//    @Cacheable(value = "users")
     public ApplicationUser registerUser(@RequestBody RegistrationDto registrationDto){
         return authenticationService.registerUser(registrationDto.getUsername(), registrationDto.getPassword());
     }
 
     @PostMapping("/login")
+    @ExecutionTimeLogger
     public ResponseEntity<LoginResponseDto> loginUser(@RequestBody LoginDto loginDto){
         if(Objects.isNull(loginDto.getUsername()) || Objects.isNull(loginDto.getPassword())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LoginResponseDto.builder().message("Invalid username or password").build());
