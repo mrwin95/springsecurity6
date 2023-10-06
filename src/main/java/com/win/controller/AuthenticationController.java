@@ -1,5 +1,7 @@
 package com.win.controller;
 
+import com.win.dto.LoginDto;
+import com.win.dto.LoginResponseDto;
 import com.win.dto.RegistrationDto;
 import com.win.models.ApplicationUser;
 import com.win.service.AuthenticationService;
@@ -17,5 +19,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ApplicationUser registerUser(@RequestBody RegistrationDto registrationDto){
         return authenticationService.registerUser(registrationDto.getUsername(), registrationDto.getPassword());
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDto loginUser(@RequestBody LoginDto loginDto){
+        return authenticationService.loginUser(loginDto.getUsername(), loginDto.getPassword());
     }
 }

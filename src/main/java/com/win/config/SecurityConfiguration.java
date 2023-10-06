@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -37,15 +38,15 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 public class SecurityConfiguration {
 
     private final RSAKeyProperties rsaKeyProperties;
-
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
         provider.setUserDetailsService(userDetailsService);
         return new ProviderManager(provider);
     }
