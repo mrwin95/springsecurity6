@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class LoginResponseDto {
     private ApplicationUser user;
     private String jwt;
+    private String message;
 }

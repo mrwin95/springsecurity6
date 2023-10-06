@@ -6,7 +6,11 @@ import com.win.dto.RegistrationDto;
 import com.win.models.ApplicationUser;
 import com.win.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -21,7 +25,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public LoginResponseDto loginUser(@RequestBody LoginDto loginDto){
-        return authenticationService.loginUser(loginDto.getUsername(), loginDto.getPassword());
+    public ResponseEntity<LoginResponseDto> loginUser(@RequestBody LoginDto loginDto){
+        if(Objects.isNull(loginDto.getUsername()) || Objects.isNull(loginDto.getPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LoginResponseDto.builder().message("Invalid username or password").build());
+        }
+        return ResponseEntity.ok(authenticationService.loginUser(loginDto.getUsername(), loginDto.getPassword()));
     }
 }

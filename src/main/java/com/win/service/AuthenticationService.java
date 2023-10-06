@@ -50,9 +50,9 @@ public class AuthenticationService {
             Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
             String token = tokenService.generateJwt(auth);
-            return new LoginResponseDto(userRepository.findByUsername(username).get(), token);
+            return new LoginResponseDto(userRepository.findByUsername(username).get(), token, "");
         }catch (AuthenticationException e){
-            return new LoginResponseDto(null, "");
+            return new LoginResponseDto(null, "", "");
         }
     }
 }
