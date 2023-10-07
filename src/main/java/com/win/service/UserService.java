@@ -22,21 +22,23 @@ public class UserService implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
-    private final CacheService cacheService;
+//    private final CacheService cacheService;
+    private final RedisCacheService redisCacheService;
     @Override
     @ExecutionTimeLogger
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserDetails> cachedToken = (Optional<UserDetails>) cacheService.getCache(username);
+
+        Optional<UserDetails> cachedToken = (Optional<UserDetails>) redisCacheService.getSimple(username);
         if(cachedToken != null){
             logger.info("call cache", cachedToken);
             return cachedToken.get();
         }
-//        System.out.println("In the user details service");
+        System.out.println("In the user details service");
 
         UserDetails users = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         if(users != null){
             logger.info("call set cache");
-            cacheService.setCache(username, users);
+            redisCacheService.putSimple(username, users);
         }
         return users;
     }

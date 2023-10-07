@@ -1,6 +1,7 @@
 package com.win.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,9 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor
 public class RedisCacheService {
-
     private RedisTemplate<Object, Object> redisTemplate;
 
+    @Autowired
     public RedisCacheService(@Qualifier("customRedisTemplate") RedisTemplate<Object, Object> redisTemplate){
         this.redisTemplate = redisTemplate;
     }
